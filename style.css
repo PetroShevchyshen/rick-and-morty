@@ -81,17 +81,86 @@ body{
   text-align: center;
   color: white;
 }
+
+.characters-collection{
+  margin-bottom: 30px;
+}
+
+.collection-search{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 200px;
+  margin: 0 auto;
+  box-shadow: 0 0 20px 2px rgb(188, 126, 255);
+  border-radius: 25px;
+  margin-bottom: 60px;
+}
+
+label{
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+#search{
+  width: 200px;
+  height: 20px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.collection-search > button{
+  height: 30px;
+  width: 100px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: blueviolet;
+}
+
 .collection-wrapper{
+  width: 1200px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 900px;
-  margin: 0 auto;
+  row-gap: 2rem;
+  box-sizing: border-box;
+  justify-items: center;
 }
 
 .collection-item{
-  height: 250px;
-  width: 200px;
+  height: 350px;
+  width: 350px;
   background-color: white;
   border-radius: 15px;
-  box-shadow: 0 0 20px 2px salmon;
+  box-shadow: 0 0 20px 2px rgb(180, 255, 126);
+  box-sizing: border-box;
+  background-size: contain;
+}
+
+.collection-item > img{
+  height: inherit;
+  width: inherit;
+  border-radius: inherit;
+}
+
+.item-information{
+  width: inherit;
+  height: inherit;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.collection-item:hover{
+  cursor: pointer;
+  transition:ease .5s;
+  opacity: .5;
 }
