@@ -82,18 +82,14 @@ body{
   color: white;
 }
 
-.characters-collection{
-  margin-bottom: 30px;
-}
-
 .collection-search{
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 500px;
-  height: 200px;
+  width: 600px;
+  height: 250px;
   margin: 0 auto;
   box-shadow: 0 0 20px 2px rgb(188, 126, 255);
   border-radius: 25px;
@@ -101,28 +97,32 @@ body{
 }
 
 label{
-  margin-bottom: 10px;
-  font-size: 1.5rem;
+  margin-bottom: 15px;
+  font-size: 3rem;
 }
 
 #search{
   width: 200px;
-  height: 20px;
-  margin-bottom: 20px;
+  height: 40px;
+  margin-bottom: 25px;
   outline: none;
+  border-radius: 10px;
+  background-color: #828282;
+  color: white;
 }
 
 .collection-search > button{
-  height: 30px;
-  width: 100px;
-  font-size: 1rem;
+  height: 40px;
+  width: 200px;
+  font-size: 1.2rem;
   border: none;
   cursor: pointer;
   border-radius: 20px;
   background-color: blueviolet;
+  color: white;
 }
 
-.collection-wrapper{
+.characters-collection-wrapper{
   width: 1200px;
   margin: 0 auto;
   display: grid;
@@ -135,32 +135,96 @@ label{
 .collection-item{
   height: 350px;
   width: 350px;
-  background-color: white;
+  background-color: black;
   border-radius: 15px;
   box-shadow: 0 0 20px 2px rgb(180, 255, 126);
   box-sizing: border-box;
   background-size: contain;
+  position: relative;
 }
 
 .collection-item > img{
   height: inherit;
   width: inherit;
   border-radius: inherit;
+  transition: ease .5s;
+}
+
+.collection-item:hover{
+  cursor: pointer;
 }
 
 .item-information{
-  width: inherit;
-  height: inherit;
   display: none;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   color: white;
+  font-size: 1.3rem;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.item-title{
   font-size: 1.5rem;
 }
 
-.collection-item:hover{
+p{
+  font-size: 1em;
+}
+
+.table-wrapper{
+  color: white;
+  margin: 0 auto;
+  width: calc(100vw - var(--scroll-width));
+  height: 600px;
+  font-size: 1.3rem;
+}
+
+section{
+  margin-bottom: 40px;
+}
+
+th{
+  text-align: start;
+  padding-left: 30px;
+}
+
+tr{
+  border: 1px solid white;
+
+}
+
+tr:nth-child(even){
+  background-color: #828282;
+}
+
+tr:hover{
   cursor: pointer;
-  transition:ease .5s;
-  opacity: .5;
+}
+
+.table-head{
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+}
+
+input::placeholder {
+  color: white;
+  font-size: 1em;
+  padding-left: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+  .collection-wrapper{
+    width: 900px;
+  }
+
+  .collection-item{
+    height: 250px;
+    width: 250px;
+  }
 }
