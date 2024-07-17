@@ -24,16 +24,14 @@ function loadContent(url) {
 async function getCharacters() {
   return await loadContent(SERVER_URLS.characters)
     .then(data =>
-      data.results.forEach(element => {
-        characterCollection.push(element);
-      }))
+      characterCollection.push(...data.results))
     .catch(e => console.error(e));
 };
 
 async function createCharacterCollection() {
   await getCharacters();
 
-  if (!characterCollection.every)
+  if (characterCollection.length === 0)
     return
 
   for (let item of characterCollection) {
@@ -78,16 +76,14 @@ async function createCharacterCollection() {
 async function getEpisodes() {
   return await loadContent(SERVER_URLS.episodes)
     .then(data =>
-      data.results.forEach(element => {
-        episodeCollection.push(element);
-      }))
+      episodeCollection.push(...data.results))
     .catch(e => console.error(e));
 };
 
 async function createEpisodeCollection() {
   await getEpisodes();
 
-  if (!episodeCollection.every)
+  if (episodeCollection.length === 0)
     return
 
   const tableWrapper = document.createElement('table');
@@ -137,7 +133,7 @@ async function getLocations() {
 async function createLocationCollection() {
   await getLocations();
 
-  if (!locationCollection.every)
+  if (locationCollection.length == 0)
     return
 
   const tableWrapper = document.createElement('table');
@@ -163,6 +159,8 @@ async function createLocationCollection() {
   locationWrapper.append(tableWrapper);
 }
 
-window.addEventListener("load", createCharacterCollection);
-window.addEventListener("load", createEpisodeCollection);
-window.addEventListener("load", createLocationCollection);
+window.addEventListener("load", () => {
+  createCharacterCollection();
+  createEpisodeCollection();
+  createLocationCollection();
+})
