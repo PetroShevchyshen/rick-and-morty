@@ -5,11 +5,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
   <title>Rick And Morty</title>
 </head>
 
 <body>
-  <script src="./main.js"></script>
+  <section class="main">
+    <div class="head">
+      <div class="head-logo">
+        <img src="./images/logo-rick-and-morty.png" alt="logo-rick-and-morty">
+      </div>
+      <div class="head-nav">
+        <ul class="head-nav__items">
+          <li class="nav-item">Characters</li>
+          <li class="nav-item">Episodes</li>
+          <li class="nav-item">Locations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-title">
+      <p class="title">Lear more about your favorite cartoon</p>
+    </div>
+  </section>
+  <section class="characters-collection">
+    <div class="collection-search">
+      <label class="title" for="search">Characters</label>
+      <input class="search-characters" id="search" type="text" placeholder="Type name of character">
+      <button class="search-button">Search</button>
+    </div>
+    <div class="characters-collection-wrapper">
+    </div>
+    <div class="parination">
+    </div>
+  </section>
+  <section class="episodes-collection">
+    <div class="collection-search">
+      <label class="title" for="search">Episodes</label>
+      <input class="search-episodes" id="search" type="text" placeholder="Type name of episode">
+      <button class="search-button">Search</button>
+    </div>
+    <div class="episodes-collection-wrapper">
+    </div>
+    <div class="parination">
+    </div>
+  </section>
+  <section class="locations-collection">
+    <div class="collection-search">
+      <label class="title" for="search">Locations</label>
+      <input class="search-locations" id="search" type="text" placeholder="Type name of location">
+      <button class="search-button">Search</button>
+    </div>
+    <div class="locations-collection-wrapper">
+    </div>
+    <div class="parination">
+    </div>
+  </section>
+  <script defer src="./main.js"></script>
 </body>
 
 </html>
