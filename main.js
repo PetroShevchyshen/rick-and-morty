@@ -8,9 +8,13 @@ const characterWrapper = document.querySelector('.characters-collection-wrapper'
 const locationWrapper = document.querySelector('.locations-collection-wrapper');
 const episodeWrapper = document.querySelector('.episodes-collection-wrapper');
 
-const characterCollection = [];
-const locationCollection = [];
-const episodeCollection = [];
+const characterPaginationWrapper = document.querySelector('.characters-collection-pagination');
+const episodePaginationWrapper = document.querySelector('.episodes-collection-pagination');
+const locationPaginationWrapper = document.querySelector('.locations-collection-pagination');
+
+let characterCollection = [];
+let locationCollection = [];
+let episodeCollection = [];
 
 const episodeTableTitles = ["Episode", "Name", "Date"];
 const locationTableTitles = ["Name", "Type", "Dimension"];
@@ -21,15 +25,16 @@ function loadContent(url) {
     .catch(error => console.error("Something wrong with Load Content", error))
 }
 
-async function getCharacters() {
-  return await loadContent(SERVER_URLS.characters)
+async function getCharacters(url) {
+  return await loadContent(url)
     .then(data =>
       characterCollection.push(...data.results))
     .catch(e => console.error(e));
 };
 
-async function createCharacterCollection() {
-  await getCharacters();
+async function createCharacterCollection(url = SERVER_URLS.characters) {
+  await getCharacters(url);
+  await createPagination(SERVER_URLS.characters);
 
   if (characterCollection.length === 0)
     return
@@ -73,15 +78,16 @@ async function createCharacterCollection() {
   }
 }
 
-async function getEpisodes() {
-  return await loadContent(SERVER_URLS.episodes)
+async function getEpisodes(url) {
+  return await loadContent(url)
     .then(data =>
       episodeCollection.push(...data.results))
     .catch(e => console.error(e));
 };
 
-async function createEpisodeCollection() {
-  await getEpisodes();
+async function createEpisodeCollection(url = SERVER_URLS.episodes) {
+  await getEpisodes(url);
+  await createPagination(SERVER_URLS.episodes);
 
   if (episodeCollection.length === 0)
     return
@@ -110,28 +116,16 @@ async function createEpisodeCollection() {
   episodeWrapper.append(tableWrapper);
 }
 
-function createTableHeader(tableTitles) {
-  const tableRow = document.createElement('tr');
-  for (const title of tableTitles) {
-    const tableHead = document.createElement('th');
-    tableHead.className = 'table-head';
-    tableHead.innerText = title;
-    tableRow.append(tableHead);
-  }
-  return tableRow;
-}
-
-async function getLocations() {
-  return await loadContent(SERVER_URLS.locations)
+async function getLocations(url) {
+  return await loadContent(url)
     .then(data =>
-      data.results.forEach(element => {
-        locationCollection.push(element);
-      }))
+      locationCollection.push(...data.results))
     .catch(e => console.error(e));
 };
 
-async function createLocationCollection() {
-  await getLocations();
+async function createLocationCollection(url = SERVER_URLS.locations) {
+  await getLocations(url);
+  await createPagination(SERVER_URLS.locations);
 
   if (locationCollection.length == 0)
     return
@@ -159,8 +153,93 @@ async function createLocationCollection() {
   locationWrapper.append(tableWrapper);
 }
 
+async function createPagination(url) {
+  const response = await loadContent(url);
+  let paginationCount = response.info.pages;
+  paginationCount = paginationCount < 20 ? paginationCount : 20;
+  let paginationWrapper;
+
+  switch (url) {
+    case SERVER_URLS.characters:
+      paginationWrapper = characterPaginationWrapper;
+      break;
+    case SERVER_URLS.locations:
+      paginationWrapper = locationPaginationWrapper;
+      break;
+    case SERVER_URLS.episodes:
+      paginationWrapper = episodePaginationWrapper;
+      break;
+    default:
+      break;
+  }
+  paginationWrapper.classList.add('pagination')
+
+  for (let index = 0; index < paginationCount; index++) {
+    const paginationBtn = document.createElement('button');
+    paginationBtn.innerText = index + 1;
+    paginationWrapper.append(paginationBtn);
+  }
+}
+
+async function getCharacterPage(event) {
+  const btn = event.target.closest('button');
+  if (!btn)
+    return
+
+  characterWrapper.innerHTML = '';
+  characterPaginationWrapper.innerHTML = '';
+  characterCollection = [];
+
+  let postfix = `?page=${btn.innerText}`;
+
+  await createCharacterCollection(SERVER_URLS.characters.concat(postfix));
+}
+
+async function getEpisodePage(event) {
+  const btn = event.target.closest('button');
+  if (!btn)
+    return
+
+  episodeWrapper.innerHTML = '';
+  episodePaginationWrapper.innerHTML = '';
+  episodeCollection = [];
+
+  let postfix = `?page=${btn.innerText}`;
+
+  await createEpisodeCollection(SERVER_URLS.episodes.concat(postfix));
+}
+
+async function getLocationPage(event) {
+  const btn = event.target.closest('button');
+  if (!btn)
+    return
+
+  locationWrapper.innerHTML = '';
+  locationPaginationWrapper.innerHTML = '';
+  locationCollection = [];
+
+  let postfix = `?page=${btn.innerText}`;
+
+  await createLocationCollection(SERVER_URLS.locations.concat(postfix));
+}
+
+function createTableHeader(tableTitles) {
+  const tableRow = document.createElement('tr');
+  for (const title of tableTitles) {
+    const tableHead = document.createElement('th');
+    tableHead.className = 'table-head';
+    tableHead.innerText = title;
+    tableRow.append(tableHead);
+  }
+  return tableRow;
+}
+
 window.addEventListener("load", () => {
   createCharacterCollection();
   createEpisodeCollection();
   createLocationCollection();
 })
+
+characterPaginationWrapper.addEventListener("click", getCharacterPage);
+episodePaginationWrapper.addEventListener("click", getEpisodePage);
+locationPaginationWrapper.addEventListener("click", getLocationPage);
