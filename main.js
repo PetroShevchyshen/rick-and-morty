@@ -193,7 +193,6 @@ async function getCharacterPage(event) {
   let postfix = `?page=${btn.innerText}`;
 
   await createCharacterCollection(SERVER_URLS.characters.concat(postfix));
-  console.log("click");
 }
 
 async function getEpisodePage(event) {
