@@ -12,6 +12,10 @@ const characterPaginationWrapper = document.querySelector('.characters-collectio
 const episodePaginationWrapper = document.querySelector('.episodes-collection-pagination');
 const locationPaginationWrapper = document.querySelector('.locations-collection-pagination');
 
+const characterSearchWrapper = document.querySelector(".characters-collection-search");
+const episodeSearchWrapper = document.querySelector(".episodes-collection-search");
+const locationSearchWrapper = document.querySelector(".locations-collection-search");
+
 let characterCollection = [];
 let locationCollection = [];
 let episodeCollection = [];
@@ -234,6 +238,54 @@ function createTableHeader(tableTitles) {
   return tableRow;
 }
 
+async function searchCharacterByName(event) {
+  const btn = event.target.closest('button');
+  const text = characterSearchWrapper.getElementsByTagName('input')[0].value.trim();
+
+  if (!btn || text === '')
+    return
+
+  characterWrapper.innerHTML = '';
+  characterCollection = [];
+
+  const postfix = `/?name=${text}`;
+
+  await createCharacterCollection(SERVER_URLS.characters.concat(postfix));
+  characterPaginationWrapper.innerHTML = '';
+}
+
+async function searchEpisodeByName(event) {
+  const btn = event.target.closest('button');
+  const text = episodeSearchWrapper.getElementsByTagName('input')[0].value.trim();
+
+  if (!btn || text === '')
+    return
+
+  episodeWrapper.innerHTML = '';
+  episodeCollection = [];
+
+  const postfix = `/?name=${text}`;
+
+  await createEpisodeCollection(SERVER_URLS.episodes.concat(postfix));
+  episodePaginationWrapper.innerHTML = '';
+}
+
+async function searchLocationByName(event) {
+  const btn = event.target.closest('button');
+  const text = locationSearchWrapper.getElementsByTagName('input')[0].value.trim();
+
+  if (!btn || text === '')
+    return
+
+  locationWrapper.innerHTML = '';
+  locationCollection = [];
+
+  const postfix = `/?name=${text}`;
+
+  await createLocationCollection(SERVER_URLS.locations.concat(postfix));
+  locationPaginationWrapper.innerHTML = '';
+}
+
 window.addEventListener("load", () => {
   createCharacterCollection();
   createEpisodeCollection();
@@ -243,3 +295,6 @@ window.addEventListener("load", () => {
 characterPaginationWrapper.addEventListener("click", getCharacterPage);
 episodePaginationWrapper.addEventListener("click", getEpisodePage);
 locationPaginationWrapper.addEventListener("click", getLocationPage);
+characterSearchWrapper.addEventListener("click", searchCharacterByName);
+episodeSearchWrapper.addEventListener("click", searchEpisodeByName);
+locationSearchWrapper.addEventListener("click", searchLocationByName);
